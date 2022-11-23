@@ -1,0 +1,29 @@
+service: serverless-cart-api
+
+frameworkVersion: "3"
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-1
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action: "lambda:InvokeFunction"
+      Resource: "*"
+
+plugins:
+  - serverless-offline
+
+functions:
+  main:
+    handler: dist/main.handler
+    events:
+      - http: 
+          method: ANY 
+          path: /
+      - http: 
+          method: ANY 
+          path: /{proxy+}
